@@ -1,6 +1,7 @@
 import Background from "./background";
 import Character from "./character";
 import Enemy from "./enemy";
+import Item from "./item";
 
 class Core {
   speed: number = 0;
@@ -15,6 +16,7 @@ class Core {
   character: Character | null = null;
   background: Background | null = null;
   enemies: Enemy[] = [];
+  items: Item[] = [];
 
   constructor(width: number, height: number) {
     this.reset();

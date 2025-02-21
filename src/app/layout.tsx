@@ -22,6 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
+      <link rel="preload" href={"/assets/dog.png"} as="image" />
       <body className={`${pretendard.variable}`}>
         <StyledComponentsRegistry>
           <Theme>{children}</Theme>
