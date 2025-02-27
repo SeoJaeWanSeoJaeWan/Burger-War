@@ -1,10 +1,10 @@
-import { StandingLeft, StandingRight, SittingLeft, SittingRight, RunningLeft, RunningRight, JumpingLeft, JumpingRight } from "./state";
+import { StandingLeft, StandingRight, SittingLeft, SittingRight, RunningLeft, RunningRight, JumpingLeft, JumpingRight, FallingLeft, FallingRight } from "./state";
 
 class Player {
     gameWidth: number;
     gameHeight: number;
 
-    states: (StandingLeft | StandingRight | SittingLeft | SittingRight | RunningLeft | RunningRight | JumpingRight | JumpingLeft)[];
+    states: (StandingLeft | StandingRight | SittingLeft | SittingRight | RunningLeft | RunningRight | JumpingRight | JumpingLeft | FallingLeft | FallingRight)[];
     currentState: StandingLeft | StandingRight;
 
     image: HTMLImageElement;
@@ -19,14 +19,20 @@ class Player {
     frameX: number;
     frameY: number;
 
+    maxFrame: number;
+
     speed: number;
     maxSpeed: number;
+
+    fps: number;
+    frameTimer: number;
+    frameInterval: number;
 
     constructor(gameWidth: number, gameHeight: number) {
         this.gameWidth = gameWidth;
         this.gameHeight = gameHeight;
 
-        this.states = [new StandingRight(this), new StandingLeft(this), new SittingRight(this), new SittingLeft(this), new RunningRight(this), new RunningLeft(this), new JumpingRight(this), new JumpingLeft(this)];
+        this.states = [new StandingRight(this), new StandingLeft(this), new SittingRight(this), new SittingLeft(this), new RunningRight(this), new RunningLeft(this), new JumpingRight(this), new JumpingLeft(this), new FallingRight(this), new FallingLeft(this)];
         this.currentState = this.states[0];
 
         this.image = document.createElement("img");
@@ -39,16 +45,31 @@ class Player {
         this.y = this.gameHeight - this.height;
 
         this.vy = 0;
-        this.weight = 0.5;
+        this.weight = 1;
 
         this.frameX = 0;
         this.frameY = 0;
 
+        this.maxFrame = 6;
+
         this.speed = 0;
         this.maxSpeed = 10;
+
+        this.fps = 30;
+        this.frameTimer = 0;
+        this.frameInterval = 1000 / this.fps;
     }
 
-    draw(ctx: CanvasRenderingContext2D) {
+    draw(ctx: CanvasRenderingContext2D, deltaTime: number) {
+
+        if (this.frameTimer > this.frameInterval) {
+            if (this.frameX < this.maxFrame) this.frameX++;
+            else this.frameX = 0;
+            this.frameTimer = 0;
+        } else {
+            this.frameTimer += deltaTime;
+        }
+
         ctx.drawImage(
             this.image,
             this.width * this.frameX, // 자를 이미지의 x좌표
@@ -71,16 +92,27 @@ class Player {
 
         this.y += this.vy;
 
-        if (this.y < this.gameHeight - this.height) {
+        const ground = this.onGround()
+
+        if (!ground) {
             this.vy += this.weight;
         } else {
             this.vy = 0;
         }
+
+        if (this.y > this.gameHeight - this.height) {
+            this.y = this.gameHeight - this.height;
+        }
+
     }
 
     setState(state: number) {
         this.currentState = this.states[state];
         this.currentState.enter();
+    }
+
+    onGround() {
+        return this.y >= this.gameHeight - this.height;
     }
 }
 

@@ -19,14 +19,17 @@ const HomeTemplate = () => {
 
         const input = new Input();
 
-        const animate = () => {
+        let lastTime = 0;
+        const animate = (timeStamp: number) => {
+            const deltaTime = timeStamp - lastTime;
+            lastTime = deltaTime;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             player.update(input.lastKey);
-            player.draw(ctx);
+            player.draw(ctx, deltaTime);
             requestAnimationFrame(animate);
         }
 
-        animate();
+        animate(0);
     }, []);
 
     return (
