@@ -16,14 +16,18 @@ const GameTemplate = () => {
 
         const game = new Core(canvas.width, canvas.height);
 
-        const animate = () => {
+        let lastTime = 0;
+
+        const animate = (timeStamp: number) => {
+            const deltaTime = timeStamp - lastTime;
+            lastTime = timeStamp;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            game.update();
+            game.update(deltaTime);
             game.draw(ctx);
             requestAnimationFrame(animate);
         }
 
-        animate();
+        animate(0);
     }, [])
 
     return (

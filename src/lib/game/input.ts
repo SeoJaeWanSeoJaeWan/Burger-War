@@ -1,5 +1,6 @@
+
 class Input {
-    keys: string[];
+    keys: Keys[];
 
     constructor() {
         this.keys = [];

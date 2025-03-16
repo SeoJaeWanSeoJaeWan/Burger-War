@@ -1,0 +1,1 @@
+declare type Keys = "ArrowDown" | "ArrowUp" | "ArrowLeft" | "ArrowRight" | "Enter";

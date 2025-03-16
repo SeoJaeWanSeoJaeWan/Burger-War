@@ -24,6 +24,15 @@ export default function RootLayout({
         <html lang="ko">
             <link rel="preload" href={"/assets/dog.png"} as="image" />
             <link rel="preload" href={"/assets/player.png"} as="image" />
+            <link rel="preload" href={"/assets/layer-1.png"} as="image" />
+            <link rel="preload" href={"/assets/layer-2.png"} as="image" />
+            <link rel="preload" href={"/assets/layer-3.png"} as="image" />
+            <link rel="preload" href={"/assets/layer-4.png"} as="image" />
+            <link rel="preload" href={"/assets/layer-5.png"} as="image" />
+            <link rel="preload" href={"/assets/enemy_fly.png"} as="image" />
+            <link rel="preload" href={"/assets/enemy_plant.png"} as="image" />
+            <link rel="preload" href={"/assets/enemy_spider_big.png"} as="image" />
+
             <body className={`${pretendard.variable}`}>
                 <StyledComponentsRegistry>
                     <Theme>{children}</Theme>
