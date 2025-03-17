@@ -1,1 +1,1 @@
-declare type Keys = "ArrowDown" | "ArrowUp" | "ArrowLeft" | "ArrowRight" | "Enter";
+declare type Keys = "ArrowDown" | "ArrowUp" | "ArrowLeft" | "ArrowRight" | "Enter" | "d";

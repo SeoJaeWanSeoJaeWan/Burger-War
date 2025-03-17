@@ -41,7 +41,7 @@ class Character {
         this.y = core.height - this.height - this.core.groundMargin;
 
         this.vy = 0;
-        this.weight = 0.5;
+        this.weight = 1;
 
         this.speed = 0;
         this.maxSpeed = 10;
@@ -83,6 +83,8 @@ class Character {
         } else {
             this.frameTimer += deltaTime;
         }
+
+        this.checkCollision();
     }
 
     onGround() {
@@ -96,7 +98,21 @@ class Character {
     }
 
     draw(context: CanvasRenderingContext2D) {
+        if (this.core.checkDebug()) context.strokeRect(this.x + 5, this.y + 5, this.width - 10, this.height - 5);
         context.drawImage(this.img, this.frameX * this.width, this.frameY * this.height, this.width, this.height, this.x, this.y, this.width, this.height);
+    }
+
+    checkCollision() {
+        this.core.enemies.forEach(enemy => {
+            if (enemy.x < this.x + this.width && enemy.x + enemy.width > this.x &&
+                enemy.y < this.y + this.height && enemy.y + enemy.height > this.y
+            ) {
+                // collision
+                console.log("collision");
+            } else {
+                // no collision
+            }
+        });
     }
 }
 export default Character;

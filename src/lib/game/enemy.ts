@@ -86,6 +86,7 @@ class Enemy {
     }
 
     draw(context: CanvasRenderingContext2D) {
+        if (this.core.checkDebug()) context.strokeRect(this.x, this.y, this.width, this.height);
         context.drawImage(
             this.image,
             this.frameX * this.width,
